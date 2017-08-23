@@ -7,9 +7,24 @@ import numpy as np
 
 LOWER_BLUE = np.array([110, 50, 50])
 UPPER_BLUE = np.array([130, 255, 255])
-LOWER_RED = np.array([150, 70, 70])
-UPPER_RED = np.array([255, 0, 0])
 pts = deque(maxlen=64)
+
+def diff(a, b):
+    """
+    a : tuple # (width, height)
+    b : tuple # (width, height) 
+    """
+    width = a[0] - b[0]
+    height = a[1] - b[1]
+
+    return width, height
+    
+def ptoc(w, h, dpi=72):
+    pixel = dpi / 2.54
+    width = w / pixel 
+    height = h / pixel
+
+    return width, height
 
 def main():
     cap = cv2.VideoCapture(0)
@@ -48,7 +63,12 @@ def main():
         pts.appendleft(center)
 
         cv2.circle(frame, (width // 2, height // 2), 5, (255, 0, 0), 10)
-        #print(center) 
+
+        if center is not None:
+            w, h = diff((width // 2, height // 2), center)
+            print("diff", "width:", w, "height:", h)
+            w, h = ptoc(w, h)
+            print("pixel to cm", "width:", w, "height:", h)
 
         cv2.imshow("frame", frame)
 
