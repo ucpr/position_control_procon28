@@ -7,6 +7,8 @@ import numpy as np
 
 LOWER_BLUE = np.array([110, 50, 50])
 UPPER_BLUE = np.array([130, 255, 255])
+LOWER_RED = np.array([150, 70, 70])
+UPPER_RED = np.array([255, 0, 0])
 pts = deque(maxlen=64)
 
 def main():
@@ -19,6 +21,9 @@ def main():
 
     while True:
         _, frame = cap.read()
+        frame = imutils.resize(frame, width=640, height=480)
+        height, width = frame.shape[:2]
+
         #HSV色空間に変換
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -42,12 +47,8 @@ def main():
 
         pts.appendleft(center)
 
-#        for i in range(1, len(pts)):
-#            if pts[i - 1] is None or pts[i] is None:
-#                continue
-
-#            thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
-#            cv2.line(frame, pts[i - 1], pts[i], (0, 0, 255), thickness)
+        cv2.circle(frame, (width // 2, height // 2), 5, (255, 0, 0), 10)
+        #print(center) 
 
         cv2.imshow("frame", frame)
 
