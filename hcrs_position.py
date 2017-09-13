@@ -29,8 +29,8 @@ def position():
 
     timepassed = signalon - signaloff
     distance = timepassed * 17000
-    return distance
     GPIO.cleanup()
+    return distance
 
 if __name__ == "__main__":
     while True:
