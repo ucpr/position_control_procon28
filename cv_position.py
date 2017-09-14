@@ -69,7 +69,5 @@ def position(cap):
     return w, h 
 
 if __name__ == "__main__":
-    import time
-    while True:
-        print(position(cap))
-        time.sleep(1)
+    cap = cv2.VideoCapture(0)
+    print(position(cap))
