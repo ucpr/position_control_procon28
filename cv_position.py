@@ -27,13 +27,9 @@ def ptoc(w, h, dpi=72):
 
     return width, height
 
-def position():
-    cap = cv2.VideoCapture(0)
-    
+def position(cap):
     if cap.isOpened() is False:
         raise("IO Error")
-
-    cv2.namedWindow("Capture", cv2.WINDOW_AUTOSIZE)
 
     _, frame = cap.read()
     frame = imutils.resize(frame, width=640, height=480)
@@ -70,15 +66,10 @@ def position():
     else:
         w, h = None, None
 
-    #while True:
-    #    cv2.imshow("frame", frame)
-    #    if cv2.waitKey(5) & 0xFF == 27:
-    #        break
-
-    cap.release()
-    cv2.destroyAllWindows()
-
     return w, h 
 
 if __name__ == "__main__":
-    main()
+    import time
+    while True:
+        print(position(cap))
+        time.sleep(1)
