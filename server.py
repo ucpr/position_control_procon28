@@ -27,7 +27,7 @@ def cv_res(p):
     return p
 
 def hcrs_res(p):
-    x, y = cv_position.position(cap)
+    x, y = hcrs_position.position(cap)
     p["hcrs"]["x"] = x
     p["hcrs"]["y"] = y
     return p
