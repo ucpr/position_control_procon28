@@ -7,8 +7,9 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 TRIG1 = 11
 ECHO1 = 13
-GPIO.setup(TRIG1,GPIO.OUT)
-GPIO.setup(ECHO1,GPIO.IN)
+GPIO.setup(TRIG1, GPIO.OUT)
+GPIO.setup(ECHO1, GPIO.IN)
+
 
 def position():
     GPIO.output(TRIG1, GPIO.LOW)
@@ -29,9 +30,9 @@ def position():
 
     timepassed = signalon - signaloff
     distance = timepassed * 17000
-    GPIO.cleanup()
+#    GPIO.cleanup()
     return distance
 
 if __name__ == "__main__":
     while True:
-        print(reading())
+        print(position())
