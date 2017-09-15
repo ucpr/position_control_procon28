@@ -11,25 +11,23 @@ app = Flask(__name__)
 position = [
     {"cv": {
         "x": None,
-        "y": None,
+        "z": None,
     }},
     {"hcrs": {
-        "x": None,
-        "y": None,
+        "distance": None,
     }},
 ]
 
 
 def cv_res(p):
-    x, y = cv_position.position(cap)
+    x, z = cv_position.position(cap)
     p["cv"]["x"] = x
-    p["cv"]["y"] = y
+    p["cv"]["z"] = z
     return p
 
 def hcrs_res(p):
-    x, y = hcrs_position.position(cap)
-    p["hcrs"]["x"] = x
-    p["hcrs"]["y"] = y
+    dis = hcrs_position.position()
+    p["hcrs"]["distance"] = dis
     return p
 
 @app.route("/json", methods=["GET"])
@@ -40,4 +38,4 @@ def get_position():
     return jsonify(p)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=5000)
