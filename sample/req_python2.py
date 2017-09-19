@@ -6,7 +6,7 @@ import json
 
 def main():
     #こいつはpython2です.
-    url = "http://83571db0.ngrok.io/json"
+    url = "localhost:5000"
     res = urllib2.urlopen(url)
     content = json.loads(res.read().decode("utf-8"))
 
