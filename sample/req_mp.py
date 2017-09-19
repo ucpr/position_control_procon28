@@ -1,11 +1,9 @@
 from System.Net import *
 from System.IO import *
-from System.Text import *
 
 
 #for missionplanner.
 url = "localhost:5000"
-encoding = Encoding.GetEncoding("utf-8")
 
 req = WebRequest.Create(url)
 res = req.GetResponse()
