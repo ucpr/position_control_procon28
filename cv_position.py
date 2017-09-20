@@ -64,7 +64,7 @@ def position(cap):
         w, h = diff((width // 2, height // 2), center)
         w, h = ptoc(w, h)
     else:
-        w, h = None, None
+        w, h = "None", "None"
 
     return w, h 
 
