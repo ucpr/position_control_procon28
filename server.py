@@ -1,5 +1,4 @@
 from datetime import datetime
-from time import sleep
 import socket
 import cv2
 import cv_position
