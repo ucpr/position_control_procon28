@@ -2,7 +2,6 @@ from datetime import datetime
 from time import sleep
 import socket
 import cv2
-import cv_position
 
 server_address = ('localhost', 5000)
 max_size = 4096
