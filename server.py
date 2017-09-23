@@ -1,9 +1,10 @@
+import sys
 from datetime import datetime
 from time import sleep
 import socket
 import cv2
 
-server_address = ('localhost', 5000)
+server_address = (sys.argv[1], 5000)
 max_size = 4096
 
 

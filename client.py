@@ -1,3 +1,4 @@
+import sys
 import socket
 from datetime import datetime
 import cv2
@@ -5,7 +6,7 @@ import cv_position
 import hcrs_position
 
 cap = cv2.VideoCapture(0)
-server_address = ('localhost', 5000)
+server_address = (sys.argv[1], 5000)
 max_size = 4096
 
 
