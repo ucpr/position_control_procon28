@@ -1,6 +1,7 @@
 import sys
 import socket
 from datetime import datetime
+import time
 import cv2
 import cv_position
 import hcrs_position
@@ -12,7 +13,8 @@ max_size = 4096
 
 def main():
     print('Starting the client at', datetime.now())
-    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client.connect(server_address)
     
     while True:
         x, z = cv_position.position(cap)
@@ -20,10 +22,10 @@ def main():
         cv_bytes = (str(x) + " " + str(z)).encode("utf-8")
         hcrs_byte = str(y).encode("utf-8")
 
-        client.sendto(cv_bytes, server_address)
-        client.sendto(hcrs_byte, server_address)
+        client.sendall(cv_bytes)
+        client.sendall(hcrs_byte)
 
-        if cv2.waitKey(2000) == "q":
+        if cv2.waitKey(20000) == "q":
             break
 
     client.close()

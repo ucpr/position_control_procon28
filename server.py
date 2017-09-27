@@ -10,21 +10,24 @@ max_size = 4096
 
 def main():
     print('Starting the server at', datetime.now())
-    server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind(server_address)
+    server.listen(5)
+    client, addr = server.accept()
 
     while True:
-        cv_p, _ = server.recvfrom(max_size)
-        hcrs, _ = server.recvfrom(max_size)
+        cv_p = client.recv(max_size)
+        hcrs = client.recv(max_size)
 
         cv_p = list(map(eval, cv_p.split()))
         hcrs = eval(hcrs)
         print(cv_p)
         print(hcrs)
         
-        if cv2.waitKey(2000) == "q":
+        if cv2.waitKey(20000) == "q":
             break
 
+    client.close()
     server.close()
 
 if __name__ == "__main__":
