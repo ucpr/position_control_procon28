@@ -1,34 +1,56 @@
-import sys
 from datetime import datetime
 from time import sleep
 import socket
 import cv2
+import cv_position
+import hcrs_position
 
-server_address = (sys.argv[1], 5000)
+cap = cv2.VideoCapture(0)
+address = ('localhost', 5000)
 max_size = 4096
 
 
-def main():
-    print('Starting the server at', datetime.now())
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind(server_address)
-    server.listen(5)
-    client, addr = server.accept()
+class Server:
 
-    while True:
-        cv_p = client.recv(max_size)
-        hcrs = client.recv(max_size)
+    def __init__(self):
+        print("waiting...")
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.bind(address)
+        self.server.listen(5)
+        self.client, addr = self.server.accept()
+        print('Start server', datetime.now())
+        print('At', datetime.now(), self.client, addr)
 
-        cv_p = list(map(eval, cv_p.split()))
-        hcrs = eval(hcrs)
-        print(cv_p)
-        print(hcrs)
-        
-        if cv2.waitKey(20000) == "q":
-            break
+    def __del__(self):
+        self.client.close()
+        self.server.close()
+        print("close server", datetime.now())
 
-    client.close()
-    server.close()
+    def run(self):
+        while True:
+            try:
+                x, z = cv_position.position(cap)
+                y = hcrs_position.position()
+                res = (str(x) + " " + str(z) + " " + str(y)).encode()
+
+                self.client.sendall(res)
+                sleep(0.3)
+
+            except BrokenPipeError:
+                """ client側がcloseしたときの処理 """
+                print("close client")
+                print("reconnect...")
+                self.__init__()  # また接続を待つ
+
+            except KeyboardInterrupt:
+                """ Ctrl+cなどでプログラムが終了された場合の処理 """
+                break
+
+            except:
+                """ その他の例外を見てみたいだけなんです... """
+                print(__import__("traceback").print_exc())
+
 
 if __name__ == "__main__":
-    main()
+    s = Server()
+    s.run()
