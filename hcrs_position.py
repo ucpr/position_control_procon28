@@ -12,6 +12,13 @@ GPIO.setup(ECHO1, GPIO.IN)
 
 
 def position():
+    """
+    超音波を使ってドローン間がどのくらい開いているかを返す
+
+    Return
+    ------
+    distance: float
+    """
     GPIO.output(TRIG1, GPIO.LOW)
     time.sleep(0.3)
        
@@ -22,7 +29,7 @@ def position():
     signaloff = 0
     signalon  = 0
  
-    while  GPIO.input(ECHO1) == 0:
+    while GPIO.input(ECHO1) == 0:
         signaloff = time.time()
          
     while GPIO.input(ECHO1) == 1:

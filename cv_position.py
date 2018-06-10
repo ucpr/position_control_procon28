@@ -10,8 +10,19 @@ UPPER_BLUE = np.array([130, 255, 255])
 
 def diff(a, b):
     """
-    a : tuple # (width, height)
-    b : tuple # (width, height) 
+    画面の中心と物体の中点との差分を返す
+
+    Parameters
+    ----------
+    a: Tuple(int, int)
+        物体の中点の座標
+    b: Tuple(int, int)
+        画面の中心の点
+
+    Return
+    ------
+    width: int
+    height: int
     """
     width = a[0] - b[0]
     height = a[1] - b[1]
@@ -19,6 +30,20 @@ def diff(a, b):
     return width, height
     
 def ptoc(w, h, dpi=72):
+    """
+    Convert pixel to cm
+
+    Parameters
+    ----------
+    w: int
+    h: int
+    dpi: int
+
+    Return
+    ------
+    width: int
+    height: int
+    """
     pixel = dpi / 2.54
     width = w / pixel 
     height = h / pixel
@@ -26,6 +51,18 @@ def ptoc(w, h, dpi=72):
     return width, height
 
 def position(cap):
+    """
+    物体を認識して, 物体の中点と画面の中心点がどのくらい離れてるかを返す.
+
+    Parameters
+    ----------
+    cap
+
+    Return
+    ------
+    w: int
+    h: int
+    """
     if cap.isOpened() is False:
         raise("IO Error")
 
