@@ -27,6 +27,14 @@ class Server:
         print("close server", datetime.now())
 
     def run(self):
+        """
+        Raises
+        ------
+        BrokenPipeError
+            client側がcloseしていた場合
+        KeyboardInterrupt
+            Ctrl+cなどでプログラムが終了されたら
+        """
         while True:
             try:
                 x, z = cv_position.position(cap)
@@ -37,13 +45,11 @@ class Server:
                 sleep(0.3)
 
             except BrokenPipeError:
-                """ client側がcloseしたときの処理 """
                 print("close client")
                 print("reconnect...")
                 self.__init__()  # また接続を待つ
 
             except KeyboardInterrupt:
-                """ Ctrl+cなどでプログラムが終了された場合の処理 """
                 break
 
             except:

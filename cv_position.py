@@ -1,33 +1,70 @@
 #!/usr/bin/env/python3
 
-from collections import deque
 import imutils
 import cv2
 import numpy as np
 
 LOWER_BLUE = np.array([110, 50, 50])
 UPPER_BLUE = np.array([130, 255, 255])
-pts = deque(maxlen=64)
 
 
 def diff(a, b):
     """
-    a : tuple # (width, height)
-    b : tuple # (width, height) 
+    画面の中心と物体の中点との差分を返す
+
+    Parameters
+    ----------
+    a: Tuple(int, int)
+        物体の中点の座標
+    b: Tuple(int, int)
+        画面の中心の点
+
+    Return
+    ------
+    width: int
+    height: int
     """
     width = a[0] - b[0]
     height = a[1] - b[1]
 
     return width, height
+
     
 def ptoc(w, h, dpi=72):
+    """
+    Convert pixel to cm
+
+    Parameters
+    ----------
+    w: int
+    h: int
+    dpi: int
+
+    Return
+    ------
+    width: int
+    height: int
+    """
     pixel = dpi / 2.54
     width = w / pixel 
     height = h / pixel
 
     return width, height
 
+
 def position(cap):
+    """
+    物体を認識して, 物体の中点と画面の中心点がどのくらい離れてるかを返す.
+
+    Parameters
+    ----------
+    cap
+
+    Return
+    ------
+    w: int
+    h: int
+    """
     if cap.isOpened() is False:
         raise("IO Error")
 
@@ -56,7 +93,6 @@ def position(cap):
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
             cv2.circle(frame, center, 5, (0, 0, 255), -1)
 
-    pts.appendleft(center)
 
     cv2.circle(frame, (width // 2, height // 2), 5, (255, 0, 0), 10)
 
@@ -67,6 +103,7 @@ def position(cap):
         w, h = "None", "None"
 
     return w, h 
+
 
 if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
