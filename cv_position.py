@@ -1,13 +1,11 @@
 #!/usr/bin/env/python3
 
-from collections import deque
 import imutils
 import cv2
 import numpy as np
 
 LOWER_BLUE = np.array([110, 50, 50])
 UPPER_BLUE = np.array([130, 255, 255])
-pts = deque(maxlen=64)
 
 
 def diff(a, b):
@@ -56,7 +54,6 @@ def position(cap):
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
             cv2.circle(frame, center, 5, (0, 0, 255), -1)
 
-    pts.appendleft(center)
 
     cv2.circle(frame, (width // 2, height // 2), 5, (255, 0, 0), 10)
 
