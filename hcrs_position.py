@@ -26,19 +26,20 @@ def position():
     time.sleep(0.00001)
     GPIO.output(TRIG1, False)
 
-    signaloff = 0
-    signalon  = 0
+    signal_off = 0
+    signal_on  = 0
  
     while GPIO.input(ECHO1) == 0:
-        signaloff = time.time()
+        signal_off = time.time()
          
     while GPIO.input(ECHO1) == 1:
-        signalon = time.time()
+        signal_on = time.time()
 
-    timepassed = signalon - signaloff
+    timepassed = signal_on - signal_off
     distance = timepassed * 17000
 #    GPIO.cleanup()
     return distance
+
 
 if __name__ == "__main__":
     while True:

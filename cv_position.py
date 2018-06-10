@@ -28,6 +28,7 @@ def diff(a, b):
     height = a[1] - b[1]
 
     return width, height
+
     
 def ptoc(w, h, dpi=72):
     """
@@ -49,6 +50,7 @@ def ptoc(w, h, dpi=72):
     height = h / pixel
 
     return width, height
+
 
 def position(cap):
     """
@@ -101,6 +103,7 @@ def position(cap):
         w, h = "None", "None"
 
     return w, h 
+
 
 if __name__ == "__main__":
     cap = cv2.VideoCapture(0)
